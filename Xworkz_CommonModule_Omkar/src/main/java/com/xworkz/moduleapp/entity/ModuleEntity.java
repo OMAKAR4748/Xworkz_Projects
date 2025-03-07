@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Data
 @Table(name = "Xworkz_Trainee")
 @NamedQuery(name = "getByEmail",query = "select m from ModuleEntity m where m.email=:email")
-
+@NamedQuery(name = "updateByEmail", query = "UPDATE ModuleEntity m SET m.name = :name, m.age = :age, m.gender = :gender, m.location = :location, m.phoneNumber = :phoneNumber, m.password = :password, m.confirmPassword = :confirmPassword WHERE m.email = :email")
 public class ModuleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

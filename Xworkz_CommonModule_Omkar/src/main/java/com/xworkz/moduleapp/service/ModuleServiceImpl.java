@@ -172,9 +172,20 @@ public class ModuleServiceImpl implements ModuleService {
         return "signInResponse.jsp";
     }
 
+    @Override
+    public boolean updateDetailsByEmail(String email, ModuleDto dto, Model model) {
+        ModuleEntity existingUser = moduleRepository.findByEmail(email);
+        if (existingUser != null) {
+            existingUser.setName(dto.getName());
+            existingUser.setPassword(dto.getPassword());
+            existingUser.setLocation(dto.getLocation());
+            moduleRepository.signUpSave(existingUser);
+            return true;
+        }
+        return false;
+    }
 
 
-    //  method to check if email exists
     public boolean isEmailExists(String email) {
         return moduleRepository.findByEmail(email) != null;
     }

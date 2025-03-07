@@ -38,7 +38,18 @@ public class ModuleController {
     }
 
 
-    public String onUpdate(@RequestParam String email ,ModuleDto dto, Model model){
-        moduleService
+    @RequestMapping("/updateDetails")
+    public String onUpdate(@RequestParam("email") String email, @ModelAttribute ModuleDto dto, Model model) {
+        System.out.println("Updating details for email: " + email);
+        boolean isUpdated = moduleService.updateDetailsByEmail(email, dto, model);
+
+        if (isUpdated) {
+            model.addAttribute("message", "User details updated successfully.");
+        } else {
+            model.addAttribute("error", "Failed to update user details.");
+        }
+
+        return "UpdateDetailsResponse.jsp";
     }
+
 }

@@ -29,7 +29,6 @@ public class ModuleRepositoryImpl implements ModuleRepository {
     }
 
 
-
     @Override
     public ModuleEntity findByEmail(String email) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -44,6 +43,21 @@ public class ModuleRepositoryImpl implements ModuleRepository {
             System.out.println("error: "+e.getMessage());
             return null;
         }
+    }
 
+    @Override
+    public int updateByEmail(String email, ModuleEntity dto) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Query query = entityManager.createNamedQuery("updateByEmail");
+        query.setParameter("email", email);
+        query.setParameter("name", dto.getName());
+        query.setParameter("age", dto.getAge());
+        query.setParameter("gender", dto.getGender());
+        query.setParameter("location", dto.getLocation());
+        query.setParameter("phoneNumber", dto.getPhoneNumber());
+        query.setParameter("password", dto.getPassword());
+        query.setParameter("confirmPassword", dto.getConfirmPassword());
+
+        return query.executeUpdate();
     }
 }

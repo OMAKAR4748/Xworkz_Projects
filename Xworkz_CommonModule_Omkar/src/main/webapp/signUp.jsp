@@ -166,7 +166,7 @@
                            <input type="number" class="form-control" id="age" name="age" value="${moduleDto.age}" placeholder="Enter your age">
                            <span style="color:red;">${ageError}</span>
                        </div>
-                       <div class="col-md-6 mb-3">
+                       <div class="col-md-6 mb-3" >
                            <label for="gender">Gender:</label><br>
                            <input type="radio" id="male" name="gender" value="Male">Male
 

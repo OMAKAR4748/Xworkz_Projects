@@ -18,12 +18,19 @@
             margin-top: 5rem;
             text-align: center;
         }
+        .container1 {
+            margin-top: -3rem;
+            text-align: center;
+            width:60px;
+            height:550px;
+            padding-left:700px;
+        }
         #logo{
             height:100px;
         }
         h1 {
-            padding-top:250px;
-            margin-bottom: 2rem;
+            padding-top:0px;
+            margin-bottom: 1rem;
             font-size:30px;
             color: black;
             font-weight: bold;
@@ -31,8 +38,8 @@
 
         }
         p{
-            padding-bottom:200px;
-            margin-bottom: 2rem;
+            padding-bottom:80px;
+            margin-bottom: 1rem;
             color: black;
             font-size:25px;
 
@@ -94,6 +101,10 @@
             </div>
         </div>
     </nav>
+
+    <div class="container1" style="display: flex; justify-content: center;">
+        <img src="https://x-workz.in/static/media/coding_img.bef297f81da57125500a.png" alt="Image">
+    </div>
 
     <h1 style="text-align:center;">Welcome to Xworkz</h1>
     <p style="text-align:center;">Your journey to mastering Java and web development starts here!</p>

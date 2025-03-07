@@ -8,5 +8,7 @@ public interface ModuleRepository {
 
     ModuleEntity findByEmail(String email);
 
+    int updateByEmail(String email, ModuleEntity dto);
+
 
 }
