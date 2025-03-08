@@ -30,11 +30,10 @@ public class ModuleRepositoryImpl implements ModuleRepository {
 
 
     @Override
-    public ModuleEntity findByEmail(String email) {
+    public ModuleEntity onSignin(String email) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try{
-           Query query= entityManager.createNamedQuery("getByEmail",ModuleEntity.class);
-            System.out.println("email"+ModuleEntity.class);
+           Query query= entityManager.createNamedQuery("getEmailAndPass");
            query.setParameter("email",email);
            ModuleEntity moduleEntity=(ModuleEntity) query.getSingleResult();
            return moduleEntity;
@@ -46,18 +45,43 @@ public class ModuleRepositoryImpl implements ModuleRepository {
     }
 
     @Override
-    public int updateByEmail(String email, ModuleEntity dto) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        Query query = entityManager.createNamedQuery("updateByEmail");
-        query.setParameter("email", email);
-        query.setParameter("name", dto.getName());
-        query.setParameter("age", dto.getAge());
-        query.setParameter("gender", dto.getGender());
-        query.setParameter("location", dto.getLocation());
-        query.setParameter("phoneNumber", dto.getPhoneNumber());
-        query.setParameter("password", dto.getPassword());
-        query.setParameter("confirmPassword", dto.getConfirmPassword());
-
-        return query.executeUpdate();
+    public ModuleEntity findByEmail(String email) {
+        EntityManager eManag = entityManagerFactory.createEntityManager();
+        Query query = eManag.createNamedQuery("findByEmail").setParameter("email", email);
+        query.getSingleResult();
+        System.out.println("REPOSITORY :" + query.getSingleResult());
+        return (ModuleEntity) query.getSingleResult();
     }
+
+    @Override
+    public boolean updateByEmail(ModuleEntity moduleEntity) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            Query query = entityManager.createNamedQuery("updateByEmail");
+
+            query.setParameter("name", moduleEntity.getName());
+            query.setParameter("email", moduleEntity.getEmail());
+            query.setParameter("age", moduleEntity.getAge());
+            query.setParameter("gender", moduleEntity.getGender());
+            query.setParameter("phoneNumber", moduleEntity.getPhoneNumber());
+            query.setParameter("location", moduleEntity.getLocation());
+            query.setParameter("password", moduleEntity.getPassword());
+            query.setParameter("confirmPassword", moduleEntity.getConfirmPassword());
+
+            int updatedCount = query.executeUpdate();
+            transaction.commit();
+            return updatedCount > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            return false;
+        } finally {
+            entityManager.close();
+        }
+    }
+
 }

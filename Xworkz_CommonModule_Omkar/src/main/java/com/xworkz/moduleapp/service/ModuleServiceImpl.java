@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import sun.nio.cs.ext.DoubleByte;
+
+import static jdk.internal.dynalink.support.NameCodec.encode;
 
 @Service
 public class ModuleServiceImpl implements ModuleService {
@@ -145,7 +148,7 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Override
     public String getSignIn(String email, String password, Model model) {
-        ModuleEntity moduleEntity = moduleRepository.findByEmail(email);
+        ModuleEntity moduleEntity = moduleRepository.onSignin(email);
 
         // Check if email exists
         if (moduleEntity == null) {
@@ -159,10 +162,10 @@ public class ModuleServiceImpl implements ModuleService {
         }
 
         // **Check if password is correct**
-//        if (!moduleEntity.getPassword().equals(password)) {
-//            model.addAttribute("error", "Invalid password");
-//            return "signin.jsp";
-//        }
+        if (!moduleEntity.getPassword().equals(password)) {
+            model.addAttribute("error", "Invalid password");
+            return "signin.jsp";
+        }
         if(moduleEntity.getPassword()==null||moduleEntity.getPassword().isEmpty()){
             model.addAttribute("error","password is required");
             return "signin.jsp";
@@ -171,22 +174,79 @@ public class ModuleServiceImpl implements ModuleService {
         model.addAttribute("name", moduleEntity.getName());
         return "signInResponse.jsp";
     }
+    
+
+//    public boolean isEmailExists(String email) {
+//        return moduleRepository.findByEmail(email) != null;
+//    }
 
     @Override
-    public boolean updateDetailsByEmail(String email, ModuleDto dto, Model model) {
-        ModuleEntity existingUser = moduleRepository.findByEmail(email);
-        if (existingUser != null) {
-            existingUser.setName(dto.getName());
-            existingUser.setPassword(dto.getPassword());
-            existingUser.setLocation(dto.getLocation());
-            moduleRepository.signUpSave(existingUser);
-            return true;
+    public ModuleDto findByEmail(String email) {
+        ModuleDto moduleDto = new ModuleDto();
+        ModuleEntity moduleEntity = moduleRepository.findByEmail(email);
+
+        BeanUtils.copyProperties(moduleEntity, moduleDto);
+        System.out.println("GET-SERVICE :" + moduleEntity);
+        return moduleDto;
+    }
+
+    // update the details by email
+    @Override
+    public boolean updatebyEmail(ModuleDto moduleDto, Model model) {
+
+        boolean isValidate = true;
+
+        if (moduleDto != null) {
+
+            ModuleEntity entity = new ModuleEntity();
+            BeanUtils.copyProperties(moduleDto,entity);
+
+            if (moduleDto.getName() != null && !moduleDto.getName().isEmpty() &&
+                    moduleDto.getName().length() >= 3 && moduleDto.getName().length() <= 25 &&
+                    moduleDto.getName().matches("[A-Z][a-z]*")) {
+                    entity.setName(moduleDto.getName());
+            } else {
+                isValidate = false;
+                model.addAttribute("userNameError", "Username must be between 3 and 25 characters and start with an uppercase letter");
+            }
+
+            String strPhone = moduleDto.getPhoneNumber() != null ? moduleDto.getPhoneNumber().toString() : "";
+            if (moduleDto.getPhoneNumber() != null && strPhone.length() == 10 && strPhone.matches("^[976]\\d{9}$")) {
+                entity.setPhoneNumber(moduleDto.getPhoneNumber());
+            } else {
+                isValidate = false;
+                model.addAttribute("phoneNoError", "Phone number must be exactly 10 digits and start with 9, 7, or 6");
+            }
+
+            if (moduleDto.getEmail() != null && moduleDto.getEmail().contains("@gmail.com") && moduleDto.getEmail().matches("^[a-z0-9]+@gmail\\.com$")) {
+                entity.setEmail(moduleDto.getEmail());
+            } else {
+                isValidate = false;
+                model.addAttribute("emailError", "Email must be contain @ and gmail.com and use any numbers");
+            }
+
+            if (moduleDto.getAge() != null && moduleDto.getAge() >= 18) {
+                entity.setAge(moduleDto.getAge());
+            } else {
+                isValidate = false;
+                model.addAttribute("ageError", "Age must be above 18+");
+            }
+
+            if (moduleDto.getPassword().equals(moduleDto.getConfirmPassword()) && moduleDto.getPassword().length() >= 8 && moduleDto.getPassword().matches(".*[0-9].*") && moduleDto.getPassword().matches(".*[!@#$%^&,.].*") && moduleDto.getPassword().matches(".*[A-Z].*")) {
+                DoubleByte.Encoder encodedPassword;
+                String encoded = encode(moduleDto.getPassword());
+                entity.setPassword(encoded);
+
+            } else {
+                isValidate = false;
+                model.addAttribute("passwordError", "Password must be at least 8 characters and must be contain Special character and Numbers");
+            }
+
+            if (isValidate) {
+                return moduleRepository.updateByEmail(entity);
+            }
         }
         return false;
     }
 
-
-    public boolean isEmailExists(String email) {
-        return moduleRepository.findByEmail(email) != null;
-    }
 }

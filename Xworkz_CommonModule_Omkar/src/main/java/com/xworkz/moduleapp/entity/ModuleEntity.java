@@ -7,7 +7,8 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "Xworkz_Trainee")
-@NamedQuery(name = "getByEmail",query = "select m from ModuleEntity m where m.email=:email")
+@NamedQuery(name = "getEmailAndPass",query = "select m from ModuleEntity m where m.email=:email")
+@NamedQuery(name = "findByEmail", query = "select ue From ModuleEntity ue where ue.email = :email")
 @NamedQuery(name = "updateByEmail", query = "UPDATE ModuleEntity m SET m.name = :name, m.age = :age, m.gender = :gender, m.location = :location, m.phoneNumber = :phoneNumber, m.password = :password, m.confirmPassword = :confirmPassword WHERE m.email = :email")
 public class ModuleEntity {
     @Id

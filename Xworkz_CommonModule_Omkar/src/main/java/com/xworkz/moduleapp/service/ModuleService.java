@@ -10,6 +10,8 @@ public interface ModuleService {
 
     String getSignIn(String email, String password, Model model);
 
-    boolean updateDetailsByEmail(String email, ModuleDto dto, Model model);
+    ModuleDto findByEmail(String email);
+
+    boolean updatebyEmail(ModuleDto moduleDto, Model model);
 
     }

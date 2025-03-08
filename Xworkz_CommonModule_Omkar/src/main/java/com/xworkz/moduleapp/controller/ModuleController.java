@@ -1,16 +1,17 @@
 package com.xworkz.moduleapp.controller;
 
 import com.xworkz.moduleapp.dto.ModuleDto;
+import com.xworkz.moduleapp.enums.Location;
 import com.xworkz.moduleapp.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -26,6 +27,7 @@ public class ModuleController {
     @PostMapping("/userSignUp")
     public String userSignUp(@Valid @ModelAttribute("moduleDto") ModuleDto moduleDto, Model model) {
         System.out.println("user sign up is running..");
+        model.addAttribute("name",moduleDto);
         moduleService.ValidateAndSave(moduleDto, model);
         return "signResponse.jsp";
     }
@@ -38,18 +40,31 @@ public class ModuleController {
     }
 
 
-    @RequestMapping("/updateDetails")
-    public String onUpdate(@RequestParam("email") String email, @ModelAttribute ModuleDto dto, Model model) {
-        System.out.println("Updating details for email: " + email);
-        boolean isUpdated = moduleService.updateDetailsByEmail(email, dto, model);
 
-        if (isUpdated) {
-            model.addAttribute("message", "User details updated successfully.");
-        } else {
-            model.addAttribute("error", "Failed to update user details.");
-        }
+    @GetMapping("/onUpdate")
+    public String update(@RequestParam String email, Model model) {
+        System.out.println("Email Controller:" + email);
+        System.out.println("Update page display with email");
+        model.addAttribute("email", email);
+        return "Update.jsp";
+    }
 
+    @GetMapping("/updateDetails")
+    public String updateDetails(@RequestParam String email, Model model) {
+        ModuleDto moduleDto = moduleService.findByEmail(email);
+        List<Location> location = new ArrayList<>(Arrays.asList(Location.values()));
+        System.out.println(location);
+        model.addAttribute("list", location);
+        model.addAttribute("dto", moduleDto);
+        System.out.println("Update Details page Display");
         return "UpdateDetailsResponse.jsp";
+    }
+
+    @PostMapping("/updateDetails")
+    public String updateDetails(ModuleDto moduleDto, Model model){
+        moduleService.updatebyEmail(moduleDto, model);
+        model.addAttribute("email", moduleDto.getEmail());
+        return "UpdateSuccess.jsp";
     }
 
 }

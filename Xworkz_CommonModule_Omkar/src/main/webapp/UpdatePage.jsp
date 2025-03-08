@@ -208,8 +208,7 @@
                        </div>
                    </div>
 
-                   <button type="submit" class="btn btn-custom">Submit</button>
-                    <button type="reset" class="btn btn-custom">Reset</button>
+                   <button type="submit" class="btn btn-custom">Update</button>
                </form>
            </div>
        </div>

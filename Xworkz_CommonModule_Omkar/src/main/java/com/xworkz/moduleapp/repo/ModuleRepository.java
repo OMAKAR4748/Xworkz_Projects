@@ -6,9 +6,10 @@ public interface ModuleRepository {
 
     boolean signUpSave(ModuleEntity moduleEntity);
 
+    ModuleEntity onSignin(String email);
+
     ModuleEntity findByEmail(String email);
 
-    int updateByEmail(String email, ModuleEntity dto);
-
+    boolean updateByEmail(ModuleEntity moduleEntity);
 
 }
