@@ -176,9 +176,9 @@ public class ModuleServiceImpl implements ModuleService {
     }
     
 
-//    public boolean isEmailExists(String email) {
-//        return moduleRepository.findByEmail(email) != null;
-//    }
+    public boolean isEmailExists(String email) {
+        return moduleRepository.findByEmail(email) != null;
+    }
 
     @Override
     public ModuleDto findByEmail(String email) {
