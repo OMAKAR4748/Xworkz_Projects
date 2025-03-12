@@ -67,7 +67,7 @@
             text-align:center;
         }
         .nav-link:hover {
-            background-color: #007bff;
+            background-color: white;
             color: white;
         }
         .nav-item{
