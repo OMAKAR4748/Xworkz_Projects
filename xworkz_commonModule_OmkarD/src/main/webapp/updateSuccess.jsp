@@ -49,6 +49,18 @@
                 }
                 .navbar-nav{
                 text-align:center;
+                }
+
+                h2{
+                text-align:center;
+                margin:7rem;
+                color:green;
+                }
+                .update{
+                text-align:center;
+                margin:7rem;
+                padding:1rem;
+                }
             </style>
 
 </head>
@@ -68,6 +80,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="signUp.jsp">SignUp</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="signin.jsp">SignIn</a>
                     </li>
@@ -76,8 +89,11 @@
             </div>
         </div>
     </nav>
+
     <h2>${msg}</h2>
-   <button type="submit" ><a href="fetchUsers?email=${emailId}">updated Profile</a></button>
+
+    <button type="submit" class="update"><a href="fetchUsers?email=${emailId}">Updated Profile</a></button>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

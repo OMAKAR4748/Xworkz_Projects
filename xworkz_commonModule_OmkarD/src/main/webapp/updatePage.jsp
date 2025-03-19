@@ -21,33 +21,33 @@
              }
              .container {
                  margin-top: 1rem;
-                 max-width: 900px;
+                 max-width: 700px;
                  height: 500px;
                  background: rgba(255, 255, 255, 0.8);
                  padding: 2rem;
                  border-radius: 10px;
-                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
              }
+
              #logo{
                          height:100px;
                      }
              h1 {
                  margin-bottom: 2rem;
-                 color: #007bff;
+                 color: red;
+                 font-weight:bold;
                  text-shadow: 2px 2px 4px #000;
                  text-align: center;
              }
              .form-container {
-                 background: violet;
+                 background: skyblue;
                  padding: 2rem;
-
                  border-radius: 10px;
-                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                 box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
              }
              .btn-custom {
                  margin: 0.5rem 10;
-                 padding: 0.75rem 1.5rem;
-                 background-color: #17a2b8;
+                 padding: 0.95rem 2.5rem;
+                 background-color: red;
                  border: none;
                  color: white;
                  width: 30%;
@@ -58,9 +58,13 @@
             border-color: #007bff;
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
         }
-        .navbar-custom {
-            background-color: rgba(0, 0, 0, 0.8);
+        .form-label{
+            font-weight:bold;
         }
+
+        .navbar-custom {
+            background-color: black;
+            }
         .navbar-custom .navbar-brand,
         .navbar-custom .nav-link {
             color: white;
@@ -80,11 +84,9 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-<img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="logo" id="logo">
-
+           <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="logo" id="logo">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -93,6 +95,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="index.jsp">Home</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="signin.jsp">SignIn</a>
                     </li>
@@ -109,30 +112,28 @@
            <div class="form-container">
                <form action="updateUser" method="post">
 
+                       <label for="id" class="form-label">id:</label>
+                       <input type="hidden"   name="id" value="${user.id}" ><br>
 
-                       Id:
-                            <input type="hidden"   name="id" value="${user.id}" ><br>
-
-                          Full Name:
-                           <input type="text"  name="fullName" value="${user.fullName}" ><br>
-
-
-                           Email:
-                           <input type="hidden" id="email" name="email" value="${user.email}" ><br>
-
-                            Gender:
-                           <input type="hidden" id="male" name="gender" value="${user.gender}"><br>
+                       <label for="fullName" class="form-label">Full Name:</label>
+                       <input type="text"  name="fullName" value="${user.fullName}" ><br>
 
 
-                           Age:
-                           <input type="number"  id="age" name="age" value="${user.age}" ><br>
+                       <label for="email" class="form-label">Email:</label>
+                       <input type="email" id="email" name="email" value="${user.email}" ><br>
+
+                       <label for="gender" class="form-label">Gender:</label><br>
+                       <input type="hidden" id="male" name="gender" value="${user.gender}"><br>
+
+                       <label for="age" class="form-label">Age:</label>
+                       <input type="number"  id="age" name="age" value="${user.age}" ><br>
 
 
-                            Phone Number:
-                              <input type="number"  id="phoneNumber" name="phoneNumber" value="${user.phoneNumber}" ><br>
+                       <label for="phoneNumber" class="form-label">Phone Number:</label>
+                       <input type="number"  id="phoneNumber" name="phoneNumber" value="${user.phoneNumber}" ><br>
 
-                           Location:
-                           <select id="location" name="location" >
+                       <label for="location" class="form-label">Location:</label>
+                       <select id="location" name="location" >
                                <option value="">Select Location</option>
                                <option value="Belagavi" ${user.location == 'Belagavi' ? 'selected' : ''}>Belagavi</option>
                                <option value="Bangalore" ${user.location == 'Bangalore' ? 'selected' : ''}>Bangalore</option>
@@ -144,15 +145,14 @@
                                <option value="Bidar" ${user.location == 'Bidar' ? 'selected' : ''}>Bidar</option>
                                <option value="Raichur" ${user.location == 'Raichur' ? 'selected' : ''}>Raichur</option>
 
-                           </select><br>
+                       </select><br>
 
-                               Password:
-                              <input type="hidden"  id="password" name="password"  value="${user.password}"><br>
+                       <label for="password" class="form-label">Password:</label>
+                       <input type="hidden"  id="password" name="password"  value="${user.password}"><br>
 
-                                 <span>${msg}</span>
+                       <span>${msg}</span>
 
-
-                   <button type="submit" class="btn btn-custom">Update</button>
+                       <button type="submit" class="btn btn-custom">Update</button>
 
                </form>
            </div>

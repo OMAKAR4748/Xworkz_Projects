@@ -24,10 +24,9 @@
           margin-top: 1rem;
           max-width: 900px;
           height: auto;
-          background: rgba(255, 255, 255, 0.9);
+
           padding: 2rem;
           border-radius: 10px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       #logo {
@@ -36,7 +35,8 @@
 
       h1 {
           margin-bottom: 2rem;
-          color: #007bff;
+          color: red;
+          font-weight:bold;
           text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
           text-align: center;
       }
@@ -44,14 +44,18 @@
       .form-container {
           padding: 2rem;
           border-radius: 10px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-          background-color: #f8f9fa;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+          background-color: skyblue;
+      }
+
+      .form-label{
+                  font-weight:bold;
       }
 
       .btn-custom {
           margin: 0.5rem 10;
           padding: 0.75rem 1.5rem;
-          background-color: #17a2b8;
+          background-color: red;
           border: none;
           color: white;
           width: 30%;
@@ -68,7 +72,7 @@
       }
 
       .navbar-custom {
-          background-color: rgba(0, 0, 0, 0.8);
+          background-color: black;
       }
 
       .navbar-custom .navbar-brand,
@@ -114,15 +118,17 @@
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
             transition: all 0.3s ease;
         }
+        #span1{
+        color:red;
+        }
 
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-<img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="logo" id="logo">
-
+            <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="logo" id="logo">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -131,6 +137,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="index.jsp">Home</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="signin.jsp">SignIn</a>
                     </li>
@@ -146,72 +153,164 @@
            <div class="form-container">
                <form action="userSignUp" method="post">
 
-                       <div class="col-md-6 mb-3">
-                           <label for="fullName" class="form-label">Full Name:</label>
-                           <input type="text" class="form-control" id="fullName" name="fullName" value="${moduleDto.fullName}" placeholder="Enter your full name">
-                       </div>
-                       <div class="col-md-6 mb-3">
-                           <label for="email" class="form-label">Email:</label>
-                           <input type="email" class="form-control" id="email" name="email" value="${moduleDto.email}" placeholder="Enter your email">
-                       </div>
+                   <div class="col-md-6 mb-3">
+                       <label for="fullName" class="form-label">Full Name<span id="span1">*</span></label>
+                       <input type="text" class="form-control" id="fullName" name="fullName"  placeholder="Enter your full name" onblur="userName()">
+                       <span id="UserNameError" style="color: red;"></span>
+                   </div>
 
-                       <div class="col-md-6 mb-3">
-                           <label for="age" class="form-label">Age:</label>
-                           <input type="number" class="form-control" id="age" name="age" value="${moduleDto.age}" placeholder="Enter your age">
-                       </div>
-                       <div class="col-md-6 mb-3">
-                           <label for="gender">Gender:</label><br>
-                           <input type="radio" id="male" name="gender" value="Male">
-                           <label for="male">Male</label>
+                   <div class="col-md-6 mb-3">
+                       <label for="email" class="form-label">Email<span id="span1">*</span></label>
+                       <input type="email" class="form-control" id="email" name="email"
+                        placeholder="Enter your email" onblur="validateEmail()">
+                        <span id="emailError" style="color: red;" ></span>
+                   </div>
 
-                           <input type="radio" id="female" name="gender" value="Female">
-                           <label for="female">Female</label>
+                   <div class="col-md-6 mb-3">
+                       <label for="age" class="form-label">Age<span id="span1">*</span></label>
+                       <input type="number" class="form-control" id="age" name="age"  placeholder="Enter your age" onblur="Age()">
+                       <span id="CheckAge" style="color: red;"></span>
+                   </div>
 
-                           <input type="radio" id="others" name="gender" value="Others">
-                           <label for="others">Others</label>
-                       </div>
+                   <div class="col-md-6 mb-3">
+                       <label for="gender" class="form-label">Gender<span id="span1">*</span></label><br>
+                       <input type="radio" id="male" name="gender" value="Male">
+                       <label for="male">Male</label>
 
-                       <div class="col-md-6 mb-3">
-                           <label for="location">Location:</label>
-                           <select id="location" name="location" class="form-control"  value="${moduleDto.location}">
-                               <option value="">--Select Location--</option>
-                               <option value="Belagavi">Belagavi</option>
-                               <option value="Bangalore">Bangalore</option>
-                               <option value="Mysore">Mysore</option>
-                               <option value="Tumkur">Tumkur</option>
-                               <option value="Hassan">Hassan</option>
-                               <option value="Mandya">Mandya</option>
-                               <option value="Gadag">Gadag</option>
-                               <option value="Bidar">Bidar</option>
-                               <option value="Raichur">Raichur</option>
-                           </select>
-                       </div>
-                       <div class="col-md-6 mb-3">
-                           <label for="phoneNumber" class="form-label">Phone Number:</label>
-                           <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" value="${moduleDto.phoneNumber}" placeholder="Enter your phone number">
-                       </div>
+                       <input type="radio" id="female" name="gender" value="Female">
+                       <label for="female">Female</label>
 
+                       <input type="radio" id="others" name="gender" value="Others">
+                       <label for="others">Others</label>
+                   </div>
 
+                   <div class="col-md-6 mb-3">
+                       <label for="location" class="form-label">Location<span id="span1">*</span></label>
+                       <select id="location" name="location" class="form-control"  value="${moduleDto.location}">
+                           <option value="">--Select Location--</option>
+                           <option value="Belagavi">Belagavi</option>
+                           <option value="Bangalore">Bangalore</option>
+                           <option value="Mysore">Mysore</option>
+                           <option value="Tumkur">Tumkur</option>
+                           <option value="Hassan">Hassan</option>
+                           <option value="Mandya">Mandya</option>
+                           <option value="Gadag">Gadag</option>
+                           <option value="Bidar">Bidar</option>
+                           <option value="Raichur">Raichur</option>
+                       </select>
+                   </div>
 
-                       <div class="col-md-6 mb-3">
-                           <label for="password" class="form-label">Password:</label>
-                           <input type="password" class="form-control" id="password" name="password" value="${moduleDto.password}" placeholder="Enter your password">
-                       </div>
+                   <div class="col-md-6 mb-3">
+                       <label for="phoneNumber" class="form-label">Phone Number<span id="span1">*</span></label>
+                       <input type="number" class="form-control" id="phoneNumber" name="phoneNumber"  placeholder="Enter your phone number" onblur="phoneNo()">
+                       <span id="phoneNumber" style="color: red;"></span>
+                   </div>
 
-                       <div class="col-md-6 mb-3">
-                           <label for="confirmPassword" class="form-label">Confirm Password:</label>
-                           <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="${moduleDto.confirmPassword}" placeholder="Confirm your password">
-                       </div>
+                   <div class="col-md-6 mb-3">
+                       <label for="password" class="form-label">Password<span id="span1">*</span></label>
+                       <input type="password" class="form-control" id="password" name="password" value="${moduleDto.password}" placeholder="Enter your password">
+                   </div>
 
-                    <br>
+                   <div class="col-md-6 mb-3">
+                       <label for="confirmPassword" class="form-label">Confirm Password<span id="span1">*</span></label>
+                       <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="${moduleDto.confirmPassword}" placeholder="Confirm your password">
+                   </div>
+
+                   <br>
                    <span>${inValid}</span>
 
                    <button type="submit" class="btn btn-custom">Submit</button>
-                    <button type="reset" class="btn btn-custom">Reset</button>
+                   <button type="reset" class="btn btn-custom">Reset</button>
                </form>
            </div>
        </div>
 
        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+       <script>
+            function validateEmail()
+            {
+                 var emailId=document.getElementById("email").value;
+                 console.log(emailId);
+                 var xhttp = new XMLHttpRequest();
+
+                 if(emailId !==""){
+                    xhttp.onload = function ()
+                     {
+                       document.getElementById("emailError").innerHTML = this.responseText;
+                       console.log(this.responseText);
+                    }
+
+                    xhttp.open("GET", "http://localhost:8081/xworkz_commonModule_omkarD/checkEmail?email=" + emailId);
+                    xhttp.send();
+
+                 }
+
+            }
+
+            function userName()
+            {
+                var fullName = document.getElementById("fullName").value;
+                console.log(fullName);
+                var xhttp = new XMLHttpRequest();
+
+                if(fullName !==""){
+                    xhttp.onload = function ()
+                     {
+                        document.getElementById("UserNameError").innerHTML = this.responseText;
+                        console.log(this.responseText);
+                    }
+
+                    xhttp.open("GET", "http://localhost:8081/xworkz_commonModule_omkarD/fullName?fullName=" +fullName);
+                    xhttp.send();
+
+                }
+
+            }
+
+            function Age()
+            {
+                var age = document.getElementById("age").value;
+                console.log(age);
+
+                var xhttp = new XMLHttpRequest();
+                if(age !==""){
+                    xhttp.onload = function ()
+                     {
+                        document.getElementById("CheckAge").innerHTML = this.responseText;
+                        console.log(this.responseText);
+                    }
+
+                    xhttp.open("GET", "http://localhost:8081/xworkz_commonModule_omkarD/checkAge?age=" +age);
+                    xhttp.send();
+
+                }
+
+            }
+
+            function phoneNo()
+            {
+                var phoneNumber = document.getElementById("phoneNumber").value;
+                console.log(phoneNumber);
+                var xhttp = new XMLHttpRequest();
+
+                if(phoneNumber !==""){
+                    xhttp.onload = function ()
+                     {
+                        document.getElementById("checkPhoneNo").innerHTML = this.responseText;
+                        console.log(this.responseText);
+                    }
+
+                    xhttp.open("GET", "http://localhost:8081/xworkz_commonModule_omkarD/checkPhoneNumber?phoneNumber=" +phoneNumber);
+                    xhttp.send();
+
+                }
+
+            }
+
+       </script>
+
+
    </body>
    </html>

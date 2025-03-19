@@ -30,7 +30,7 @@ public class ModuleRepoImpl implements ModuleRepo {
     @Override
     public ModuleEntity findByEmail(String email) {
         try {
-            Query query = entityManager.createNamedQuery("getByEmail", ModuleEntity.class);
+            Query query = entityManager.createNamedQuery("getByEmail");
             query.setParameter("email", email);
             ModuleEntity moduleEntity = (ModuleEntity) query.getSingleResult();
 
@@ -53,6 +53,8 @@ public class ModuleRepoImpl implements ModuleRepo {
             return null;
         }
     }
+
+
 
     @Override
     public boolean updateUser(ModuleEntity moduleEntity) {
@@ -83,4 +85,38 @@ public class ModuleRepoImpl implements ModuleRepo {
             entityManager.close();
         }
     }
+
+    @Override
+    public Long isEmailId(String email) {
+        Long cout=0l;
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        cout= (Long) entityManager.createNamedQuery("checkEmail").setParameter("email",email).getSingleResult();
+        System.out.println("Email Repo :"+email);
+        return cout;
+    }
+
+    @Override
+    public ModuleEntity isUserName(String fullName) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        ModuleEntity entity = (ModuleEntity) entityManager.createNamedQuery("fullName").setParameter("fullName",fullName).getSingleResult();
+        System.out.println("Name repo:" +fullName);
+        return entity;
+    }
+
+    @Override
+    public ModuleEntity checkAge(Integer age) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        ModuleEntity entity = (ModuleEntity) entityManager.createNamedQuery("CheckAge").setParameter("age",age).getSingleResult();
+        System.out.println("Age repo:" +age);
+        return entity;
+    }
+
+    @Override
+    public ModuleEntity checkPhoneNo(String phoneNumber) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        ModuleEntity entity = (ModuleEntity) entityManager.createNamedQuery("checkPhoneNo").setParameter("phoneNumber",phoneNumber).getSingleResult();
+        System.out.println("Phone Number repo:" +phoneNumber);
+        return entity;
+    }
+
 }

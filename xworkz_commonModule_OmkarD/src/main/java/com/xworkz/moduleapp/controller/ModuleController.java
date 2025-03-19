@@ -98,4 +98,9 @@ public class ModuleController {
             return "accountLocked.jsp";
         }
     }
+
+    @GetMapping("/signUpPage")
+    public String signUpPage(){
+        return "signUp.jsp";
+    }
 }

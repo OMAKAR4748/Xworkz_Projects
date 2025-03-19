@@ -9,6 +9,10 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "Xworkz_Module")
 @NamedQuery(name = "getByEmail",query = "select m from ModuleEntity m where m.email=:email")
+@NamedQuery(name = "checkEmail",query = "select count(e.email) from ModuleEntity e where e.email=:email")
+@NamedQuery(name="fullName", query = "select m from ModuleEntity m where m.fullName=:fullName")
+@NamedQuery(name = "CheckAge", query = "select m from ModuleEntity m where m.age=:age")
+@NamedQuery(name = "checkPhoneNo", query = "select m from ModuleEntity m where m.phoneNumber=:phoneNumber")
 
 
 public class ModuleEntity {
@@ -38,7 +42,7 @@ public class ModuleEntity {
     private String password;
 
     @Column(name = "failed_attempts")
-    private int failedAttempts = 0;  // Track failed login attempts
+    private int failedAttempts = 0;
 
     @Column(name = "account_locked")
     private boolean accountLocked = false;

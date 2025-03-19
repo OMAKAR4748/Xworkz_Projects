@@ -20,9 +20,9 @@
             flex-direction: column;
         }
         .container {
-            background: #ffffff;
+            background: skyblue;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,1);
             padding: 30px;
             max-width: 400px;
             text-align: center;
@@ -33,11 +33,15 @@
 
         }
         h2 {
-            color: #007bff;
+            color: purple;
             margin-bottom: 20px;
         }
+        .form-label{
+               font-weight:bold;
+        }
+
         .btn-custom {
-            background-color: #17a2b8;
+            background-color: red;
             border: none;
             color: white;
             width: 100%;
@@ -67,7 +71,6 @@
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
         <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="logo" id="logo">
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -94,17 +97,21 @@
                 <label for="email" class="form-label">Email:</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
             </div>
+
             <div class="mb-3">
                 <label for="new-password" class="form-label">New Password:</label>
                 <input type="password" class="form-control" id="new-password" name="password" placeholder="Enter new password" required>
             </div>
+
             <div class="mb-3">
                 <label for="confirm-password" class="form-label">Confirm Password:</label>
                 <input type="password" class="form-control" id="confirm-password" name="confirmPassword" placeholder="Confirm new password" required>
             </div>
+
             <button type="submit" class="btn btn-custom">Update Password</button>
         </form>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

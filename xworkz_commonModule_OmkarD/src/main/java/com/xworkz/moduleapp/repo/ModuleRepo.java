@@ -9,6 +9,13 @@ public interface ModuleRepo {
 
     boolean updateUser(ModuleEntity moduleEntity);
 
-
     void unlockUserAccount(String email);
+
+    Long isEmailId(String email);
+
+    ModuleEntity isUserName(String fullName);
+
+    ModuleEntity checkAge(Integer age);
+
+    ModuleEntity checkPhoneNo(String phoneNumber);
 }

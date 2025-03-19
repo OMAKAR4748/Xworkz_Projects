@@ -59,7 +59,7 @@
             background-color: red;
         }
         .navbar-custom {
-            background-color: rgba(0, 0, 0, 0.8);
+           background-color: black;
         }
         .navbar-custom .navbar-brand,
         .navbar-custom .nav-link {
@@ -84,16 +84,16 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-<img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="logo" id="logo">             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="logo" id="logo">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="signUp.jsp">Sign Up</a>
+                        <a class="nav-link" href="signUpPage">Sign Up</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="signin.jsp">Sign In</a>
@@ -103,7 +103,7 @@
         </div>
     </nav>
 
-<div class="container1" style="display: flex; justify-content: center;">
+    <div class="container1" style="display: flex; justify-content: center;">
         <img src="https://x-workz.in/static/media/coding_img.bef297f81da57125500a.png" alt="Image">
     </div>
 

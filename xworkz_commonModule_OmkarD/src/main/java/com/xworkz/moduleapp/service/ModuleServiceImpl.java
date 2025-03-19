@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Service
 public class ModuleServiceImpl implements ModuleService {
 
-    private static final int MAX_FAILED_ATTEMPTS = 3; // Maximum failed attempts before locking account
+    private static final int MAX_FAILED_ATTEMPTS = 3;
 
     @Autowired
     private ModuleRepo moduleRepo;
@@ -59,7 +59,7 @@ public class ModuleServiceImpl implements ModuleService {
         }
 
         // Age validation
-        if (age == null || age < 10) {
+        if (age == null || age < 18) {
             return false;
         }
 
@@ -204,8 +204,28 @@ public class ModuleServiceImpl implements ModuleService {
         ModuleEntity moduleEntity = moduleRepo.findByEmail(email);
 
         if (moduleEntity != null && moduleEntity.isAccountLocked() && moduleEntity.getLockTime() != null) {
-            return moduleEntity.getLockTime().plusHours(24); // Unlock after 24 hours
+            return moduleEntity.getLockTime().plusHours(24);
         }
         return null;
+    }
+
+    @Override
+    public Long isEmailId(String email) {
+        return moduleRepo.isEmailId(email);
+    }
+
+    @Override
+    public ModuleEntity isUserName(String fullName) {
+        return moduleRepo.isUserName(fullName);
+    }
+
+    @Override
+    public ModuleEntity checkAge(Integer age) {
+        return moduleRepo.checkAge(age);
+    }
+
+    @Override
+    public ModuleEntity checkPhoneNo(String phoneNumber) {
+        return moduleRepo.checkPhoneNo(phoneNumber);
     }
 }
