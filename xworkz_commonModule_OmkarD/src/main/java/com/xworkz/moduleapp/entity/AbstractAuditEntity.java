@@ -2,15 +2,21 @@ package com.xworkz.moduleapp.entity;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @MappedSuperclass
-public class AbstractAuditEntity {
+public class AbstractAuditEntity implements Serializable {
 
+    @Column(name = "created_by")
     private String createdBy;
-    private LocalDateTime createdDateAndTime;
+    @Column(name = "created_date")
+    private LocalDateTime createdDate = LocalDateTime.now();
+    @Column(name = "updated_by")
     private String updatedBy;
-    private LocalDateTime updatedDateAndTime;
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate=LocalDateTime.now();
 }

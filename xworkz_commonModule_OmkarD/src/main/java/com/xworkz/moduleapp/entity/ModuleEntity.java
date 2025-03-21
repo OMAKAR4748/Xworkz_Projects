@@ -10,10 +10,8 @@ import java.time.LocalDateTime;
 @Table(name = "Xworkz_Module")
 @NamedQuery(name = "getByEmail",query = "select m from ModuleEntity m where m.email=:email")
 @NamedQuery(name = "checkEmail",query = "select count(e.email) from ModuleEntity e where e.email=:email")
-@NamedQuery(name="fullName", query = "select m from ModuleEntity m where m.fullName=:fullName")
-@NamedQuery(name = "CheckAge", query = "select m from ModuleEntity m where m.age=:age")
-@NamedQuery(name = "checkPhoneNo", query = "select m from ModuleEntity m where m.phoneNumber=:phoneNumber")
-
+@NamedQuery(name="name", query = "select count(m) from ModuleEntity m where m.fullName=:fullName")
+@NamedQuery(name = "checkPhoneNo", query = "select count(m) from ModuleEntity m where m.phoneNumber=:phoneNumber")
 
 public class ModuleEntity {
     @Id
@@ -50,5 +48,7 @@ public class ModuleEntity {
     @Column(name = "lock_time")
     private LocalDateTime lockTime;
 
+    @Column(name = "profileImage")
+    private String profileImage;
 
 }

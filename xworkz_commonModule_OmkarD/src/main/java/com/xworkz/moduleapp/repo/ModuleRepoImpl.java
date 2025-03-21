@@ -1,76 +1,91 @@
 package com.xworkz.moduleapp.repo;
 
 import com.xworkz.moduleapp.entity.ModuleEntity;
-import org.springframework.stereotype.Repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Repository
 public class ModuleRepoImpl implements ModuleRepo {
-    private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ecommerce");
-    EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
     @Override
     public boolean signUpSave(ModuleEntity moduleEntity) {
+        System.out.println("Saving user: {}"+ moduleEntity.getEmail());
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            if (moduleEntity != null) {
-                entityManager.getTransaction().begin();
-                entityManager.persist(moduleEntity);
-                entityManager.getTransaction().commit();
-                return true;
-            }
-            return false;
+            entityManager.getTransaction().begin();
+            entityManager.persist(moduleEntity);
+            entityManager.getTransaction().commit();
+            System.out.println("User saved successfully: {}"+ moduleEntity.getEmail());
+            return true;
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+            System.out.println("Error saving user: {}"+ e.getMessage());
+            return false;
+        } finally {
+            entityManager.close();
         }
-        return false;
     }
 
     @Override
     public ModuleEntity findByEmail(String email) {
+        System.out.println("Fetching user by email: {}"+ email);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             Query query = entityManager.createNamedQuery("getByEmail");
             query.setParameter("email", email);
             ModuleEntity moduleEntity = (ModuleEntity) query.getSingleResult();
 
-
             if (moduleEntity.isAccountLocked() && moduleEntity.getLockTime() != null) {
                 LocalDateTime unlockTime = moduleEntity.getLockTime().plusHours(24);
                 if (LocalDateTime.now().isAfter(unlockTime)) {
+                    System.out.println("Unlocking user account: {}"+ email);
                     unlockUserAccount(email);
                     moduleEntity.setAccountLocked(false);
                     moduleEntity.setFailedAttempts(0);
                     moduleEntity.setLockTime(null);
                 }
             }
-
-            System.out.println("repo: " + moduleEntity);
             return moduleEntity;
-
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+        } catch (NoResultException e) {
+            System.out.println("No user found with email: {}"+ email);
             return null;
+        } catch (Exception e) {
+            System.out.println("Error fetching user: {}"+ e.getMessage());
+            return null;
+        } finally {
+            entityManager.close();
         }
     }
 
-
-
     @Override
     public boolean updateUser(ModuleEntity moduleEntity) {
-        boolean isUpdate = false;
+        System.out.println("Updating user: {}"+ moduleEntity.getEmail());
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.merge(moduleEntity);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        isUpdate = true;
-        return isUpdate;
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(moduleEntity);
+            entityManager.getTransaction().commit();
+            System.out.println("User updated successfully: {}"+ moduleEntity.getEmail());
+            return true;
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            System.out.println("Error updating user: {}"+ e.getMessage());
+            return false;
+        } finally {
+            entityManager.close();
+        }
     }
 
-//
     @Override
     public void unlockUserAccount(String email) {
+        System.out.println("Unlocking account for email: {}"+ email);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             entityManager.getTransaction().begin();
@@ -78,9 +93,10 @@ public class ModuleRepoImpl implements ModuleRepo {
             query.setParameter("email", email);
             query.executeUpdate();
             entityManager.getTransaction().commit();
+            System.out.println("Account unlocked successfully for email: {}"+email);
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
-            System.out.println("Error unlocking account: " + e.getMessage());
+            System.out.println("Error unlocking account: {}"+ e.getMessage());
         } finally {
             entityManager.close();
         }
@@ -88,35 +104,43 @@ public class ModuleRepoImpl implements ModuleRepo {
 
     @Override
     public Long isEmailId(String email) {
-        Long cout=0l;
+        System.out.println("Checking if email exists: {}"+ email);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        cout= (Long) entityManager.createNamedQuery("checkEmail").setParameter("email",email).getSingleResult();
-        System.out.println("Email Repo :"+email);
-        return cout;
+        try {
+            Query query = entityManager.createNamedQuery("checkEmail");
+            query.setParameter("email", email);
+            return (Long) query.getSingleResult();
+        } catch (Exception e) {
+            System.out.println("Error checking email: {}"+ e.getMessage());
+            return 0L;
+        }
     }
 
     @Override
-    public ModuleEntity isUserName(String fullName) {
+    public Long isUserName(String fullName) {
+        System.out.println("Checking if username exists: {}"+ fullName);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        ModuleEntity entity = (ModuleEntity) entityManager.createNamedQuery("fullName").setParameter("fullName",fullName).getSingleResult();
-        System.out.println("Name repo:" +fullName);
-        return entity;
+        try {
+            Query query = entityManager.createNamedQuery("name");
+            query.setParameter("fullName", fullName);
+            return (Long) query.getSingleResult();
+        } catch (Exception e) {
+            System.out.println("Error checking username: {}"+ e.getMessage());
+            return 0L;
+        }
     }
 
     @Override
-    public ModuleEntity checkAge(Integer age) {
+    public Long checkPhoneNumber(String phoneNumber) {
+        System.out.println("Checking if phone number exists: {}"+phoneNumber);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        ModuleEntity entity = (ModuleEntity) entityManager.createNamedQuery("CheckAge").setParameter("age",age).getSingleResult();
-        System.out.println("Age repo:" +age);
-        return entity;
+        try{
+            Query query = entityManager.createNamedQuery("checkPhoneNo");
+            query.setParameter("phoneNumber", phoneNumber);
+            return (Long) query.getSingleResult();
+        } catch (Exception e) {
+            System.out.println("Error checking phone number: "+e.getMessage());
+            return 0L;
+        }
     }
-
-    @Override
-    public ModuleEntity checkPhoneNo(String phoneNumber) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        ModuleEntity entity = (ModuleEntity) entityManager.createNamedQuery("checkPhoneNo").setParameter("phoneNumber",phoneNumber).getSingleResult();
-        System.out.println("Phone Number repo:" +phoneNumber);
-        return entity;
-    }
-
 }

@@ -23,19 +23,24 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Override
     public boolean signUpValidateAndSave(ModuleDto moduleDto) {
+        System.out.println("Validating and saving user: ");
+
         if (!isValidUser(moduleDto)) {
+            System.out.println("Validation failed for user: ");
             return false;
         }
 
-        // Encrypt the password before saving
-        moduleDto.setPassword(passwordEncoder.encode(moduleDto.getPassword()));
-        moduleDto.setConfirmPassword(moduleDto.getPassword());
+        // Encrypt password before saving
+        String encodedPassword = passwordEncoder.encode(moduleDto.getPassword());
+        moduleDto.setPassword(encodedPassword);
+        moduleDto.setConfirmPassword(encodedPassword);
 
         // Convert DTO to Entity and save
         ModuleEntity moduleEntity = new ModuleEntity();
         BeanUtils.copyProperties(moduleDto, moduleEntity);
         moduleRepo.signUpSave(moduleEntity);
 
+        System.out.println("User saved successfully: ");
         return true;
     }
 
@@ -59,7 +64,7 @@ public class ModuleServiceImpl implements ModuleService {
         }
 
         // Age validation
-        if (age == null || age < 18) {
+        if (age == null || age < 10) {
             return false;
         }
 
@@ -84,12 +89,12 @@ public class ModuleServiceImpl implements ModuleService {
         return moduleDto.getConfirmPassword() != null && password.equals(moduleDto.getConfirmPassword());
     }
 
-
     @Override
     public ModuleDto getByEmail(String email) {
+        System.out.println("Fetching user details for email: ");
         ModuleEntity moduleEntity = moduleRepo.findByEmail(email);
         if (moduleEntity == null) {
-            System.out.println("No user found for email: " + email);
+            System.out.println("No user found for email: ");
             return null;
         }
 
@@ -100,9 +105,8 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Override
     public boolean updateUser(ModuleDto userDto) {
-        if (userDto == null) {
-            return false;
-        }
+        System.out.println("Updating user: ");
+        if (userDto == null) return false;
 
         ModuleEntity userEntity = new ModuleEntity();
         BeanUtils.copyProperties(userDto, userEntity);
@@ -111,12 +115,12 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Override
     public void increaseFailedAttempts(String email) {
+        System.out.println("Increasing failed login attempts for email: ");
         ModuleEntity moduleEntity = moduleRepo.findByEmail(email);
         if (moduleEntity != null) {
-            int newFailedAttempts = moduleEntity.getFailedAttempts() + 1;
-            moduleEntity.setFailedAttempts(newFailedAttempts);
+            moduleEntity.setFailedAttempts(moduleEntity.getFailedAttempts() + 1);
 
-            if (newFailedAttempts >= MAX_FAILED_ATTEMPTS) {
+            if (moduleEntity.getFailedAttempts() >= MAX_FAILED_ATTEMPTS) {
                 lockUserAccount(email);
             } else {
                 moduleRepo.updateUser(moduleEntity);
@@ -126,71 +130,69 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Override
     public void lockUserAccount(String email) {
+        System.out.println("Locking user account: ");
         ModuleEntity moduleEntity = moduleRepo.findByEmail(email);
         if (moduleEntity != null) {
             moduleEntity.setAccountLocked(true);
-            moduleEntity.setLockTime(LocalDateTime.now());  // Store lock time
+            moduleEntity.setLockTime(LocalDateTime.now());
             moduleRepo.updateUser(moduleEntity);
-            System.out.println("User account locked at: " + moduleEntity.getLockTime());
         }
     }
 
     @Override
     public void resetFailedAttempts(String email) {
+        System.out.println("Resetting failed attempts for email:");
         ModuleEntity moduleEntity = moduleRepo.findByEmail(email);
         if (moduleEntity != null) {
             moduleEntity.setFailedAttempts(0);
             moduleEntity.setAccountLocked(false);
-            moduleEntity.setLockTime(null);  // Reset lock time
+            moduleEntity.setLockTime(null);
             moduleRepo.updateUser(moduleEntity);
         }
     }
 
     @Override
     public String getSignInStatus(String email, String password) {
+        System.out.println("Checking sign-in status for email: ");
         ModuleEntity moduleEntity = moduleRepo.findByEmail(email);
 
         if (moduleEntity == null) {
+            System.out.println("User not found: ");
             return "USER_NOT_FOUND";
         }
 
-        // Check if the account is locked
         if (moduleEntity.isAccountLocked()) {
             LocalDateTime unlockTime = moduleEntity.getLockTime().plusHours(24);
-
             if (LocalDateTime.now().isAfter(unlockTime)) {
-                // Unlock account automatically
                 unlockUserAccount(email);
-                System.out.println("Account unlocked automatically for: " + email);
+                System.out.println("Account unlocked automatically: ");
             } else {
                 return "LOCKED";
             }
         }
 
-        // Verify password
         if (!passwordEncoder.matches(password, moduleEntity.getPassword())) {
             increaseFailedAttempts(email);
+            System.out.println("Invalid password attempt for email: ");
             return "INVALID_PASSWORD";
         }
 
         resetFailedAttempts(email);
+        System.out.println("Sign-in successful for email: ");
         return "SUCCESS";
     }
 
-
     @Override
     public boolean unlockUserAccount(String email) {
+        System.out.println("Manually unlocking user account: ");
         ModuleEntity moduleEntity = moduleRepo.findByEmail(email);
-
         if (moduleEntity != null && moduleEntity.isAccountLocked()) {
             moduleEntity.setAccountLocked(false);
             moduleEntity.setFailedAttempts(0);
-            moduleEntity.setLockTime(null);  // Reset lock time
+            moduleEntity.setLockTime(null);
             moduleRepo.updateUser(moduleEntity);
-            System.out.println("User account unlocked successfully for: " + email);
             return true;
         }
-
         return false;
     }
 
@@ -202,8 +204,7 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public LocalDateTime getUnlockTime(String email) {
         ModuleEntity moduleEntity = moduleRepo.findByEmail(email);
-
-        if (moduleEntity != null && moduleEntity.isAccountLocked() && moduleEntity.getLockTime() != null) {
+        if (moduleEntity != null && moduleEntity.isAccountLocked()) {
             return moduleEntity.getLockTime().plusHours(24);
         }
         return null;
@@ -215,17 +216,12 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public ModuleEntity isUserName(String fullName) {
+    public Long isUserName(String fullName) {
         return moduleRepo.isUserName(fullName);
     }
 
     @Override
-    public ModuleEntity checkAge(Integer age) {
-        return moduleRepo.checkAge(age);
-    }
-
-    @Override
-    public ModuleEntity checkPhoneNo(String phoneNumber) {
-        return moduleRepo.checkPhoneNo(phoneNumber);
+    public Long checkPhoneNumber(String phoneNumber) {
+        return moduleRepo.checkPhoneNumber(phoneNumber);
     }
 }

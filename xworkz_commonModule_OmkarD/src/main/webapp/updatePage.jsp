@@ -81,6 +81,10 @@
             color: red;
             font-size: 0.9rem;
         }
+
+        #span1{
+                color:red;
+                }
     </style>
 </head>
 <body>
@@ -108,56 +112,53 @@
 
    <div class="container">
            <h1>Update Form</h1>
-
            <div class="form-container">
                <form action="updateUser" method="post">
 
-                       <label for="id" class="form-label">id:</label>
-                       <input type="hidden"   name="id" value="${user.id}" ><br>
+                   <label for="id" class="form-label">id<span id="span1">*</span></label>
+                   <input type="hidden"   name="id" value="${user.id}" ><br>
 
-                       <label for="fullName" class="form-label">Full Name:</label>
-                       <input type="text"  name="fullName" value="${user.fullName}" ><br>
+                   <label for="fullName" class="form-label">Full Name<span id="span1">*</span></label>
+                   <input type="text"  name="fullName" value="${user.fullName}" ><br>
 
+                   <label for="email" class="form-label">Email<span id="span1">*</span></label>
+                   <input type="email" id="email" name="email" value="${user.email}" ><br>
 
-                       <label for="email" class="form-label">Email:</label>
-                       <input type="email" id="email" name="email" value="${user.email}" ><br>
+                   <label for="gender" class="form-label">Gender<span id="span1">*</span></label><br>
+                   <input type="hidden" id="male" name="gender" value="${user.gender}"><br>
 
-                       <label for="gender" class="form-label">Gender:</label><br>
-                       <input type="hidden" id="male" name="gender" value="${user.gender}"><br>
+                   <label for="age" class="form-label">Age<span id="span1">*</span></label>
+                   <input type="number"  id="age" name="age" value="${user.age}" ><br>
 
-                       <label for="age" class="form-label">Age:</label>
-                       <input type="number"  id="age" name="age" value="${user.age}" ><br>
+                   <label for="phoneNumber" class="form-label">Phone Number<span id="span1">*</span></label>
+                   <input type="number"  id="phoneNumber" name="phoneNumber" value="${user.phoneNumber}" ><br>
 
+                   <label for="location" class="form-label">Location<span id="span1">*</span></label>
+                   <select id="location" name="location" >
+                           <option value="">Select Location</option>
+                           <option value="Belagavi" ${user.location == 'Belagavi' ? 'selected' : ''}>Belagavi</option>
+                           <option value="Bangalore" ${user.location == 'Bangalore' ? 'selected' : ''}>Bangalore</option>
+                           <option value="Mysore" ${user.location == 'Mysore' ? 'selected' : ''}>Mysore</option>
+                           <option value="Tumkur" ${user.location == 'Tumkur' ? 'selected' : ''}>Tumkur</option>
+                           <option value="Hassan" ${user.location == 'Hassan' ? 'selected' : ''}>Hassan</option>
+                           <option value="Mandya" ${user.location == 'Mandya' ? 'selected' : ''}>Mandya</option>
+                           <option value="Gadag" ${user.location == 'Gadag' ? 'selected' : ''}>Gadag</option>
+                           <option value="Bidar" ${user.location == 'Bidar' ? 'selected' : ''}>Bidar</option>
+                           <option value="Raichur" ${user.location == 'Raichur' ? 'selected' : ''}>Raichur</option>
+                   </select><br>
 
-                       <label for="phoneNumber" class="form-label">Phone Number:</label>
-                       <input type="number"  id="phoneNumber" name="phoneNumber" value="${user.phoneNumber}" ><br>
+                   <label for="password" class="form-label">Password<span id="span1">*</span></label>
+                   <input type="hidden"  id="password" name="password"  value="${user.password}"><br>
 
-                       <label for="location" class="form-label">Location:</label>
-                       <select id="location" name="location" >
-                               <option value="">Select Location</option>
-                               <option value="Belagavi" ${user.location == 'Belagavi' ? 'selected' : ''}>Belagavi</option>
-                               <option value="Bangalore" ${user.location == 'Bangalore' ? 'selected' : ''}>Bangalore</option>
-                               <option value="Mysore" ${user.location == 'Mysore' ? 'selected' : ''}>Mysore</option>
-                               <option value="Tumkur" ${user.location == 'Tumkur' ? 'selected' : ''}>Tumkur</option>
-                               <option value="Hassan" ${user.location == 'Hassan' ? 'selected' : ''}>Hassan</option>
-                               <option value="Mandya" ${user.location == 'Mandya' ? 'selected' : ''}>Mandya</option>
-                               <option value="Gadag" ${user.location == 'Gadag' ? 'selected' : ''}>Gadag</option>
-                               <option value="Bidar" ${user.location == 'Bidar' ? 'selected' : ''}>Bidar</option>
-                               <option value="Raichur" ${user.location == 'Raichur' ? 'selected' : ''}>Raichur</option>
+                   <label for="profileImage" class="form-label">Profile picture<span id="span1">*</span></label>
+                   <input type="hidden" class="form-control" id="profileImage" name="multipartFile" ><br>
 
-                       </select><br>
+                   <span>${msg}</span>
 
-                       <label for="password" class="form-label">Password:</label>
-                       <input type="hidden"  id="password" name="password"  value="${user.password}"><br>
-
-                       <span>${msg}</span>
-
-                       <button type="submit" class="btn btn-custom">Update</button>
-
+                   <button type="submit" class="btn btn-custom">Update</button>
                </form>
            </div>
-
-       </div>
+   </div>
 
        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
    </body>

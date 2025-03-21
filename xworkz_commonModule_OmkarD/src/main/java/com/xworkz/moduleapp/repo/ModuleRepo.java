@@ -13,9 +13,8 @@ public interface ModuleRepo {
 
     Long isEmailId(String email);
 
-    ModuleEntity isUserName(String fullName);
+    Long isUserName(String fullName);
 
-    ModuleEntity checkAge(Integer age);
+    Long checkPhoneNumber(String phoneNumber);
 
-    ModuleEntity checkPhoneNo(String phoneNumber);
 }

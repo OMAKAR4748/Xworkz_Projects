@@ -151,24 +151,23 @@
    <div class="container">
            <h1>Sign Up </h1>
            <div class="form-container">
-               <form action="userSignUp" method="post">
+               <form action="userSignUp" method="post" enctype="multipart/form-data">
 
                    <div class="col-md-6 mb-3">
                        <label for="fullName" class="form-label">Full Name<span id="span1">*</span></label>
-                       <input type="text" class="form-control" id="fullName" name="fullName"  placeholder="Enter your full name" onblur="userName()">
+                       <input type="text" class="form-control" id="fullName" name="fullName"  placeholder="Enter your full name" onblur="userName()" value="${moduleDto.fullName}">
                        <span id="UserNameError" style="color: red;"></span>
                    </div>
 
                    <div class="col-md-6 mb-3">
                        <label for="email" class="form-label">Email<span id="span1">*</span></label>
-                       <input type="email" class="form-control" id="email" name="email"
-                        placeholder="Enter your email" onblur="validateEmail()">
+                       <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" onblur="validateEmail()" value="${moduleDto.email}">
                         <span id="emailError" style="color: red;" ></span>
                    </div>
 
                    <div class="col-md-6 mb-3">
                        <label for="age" class="form-label">Age<span id="span1">*</span></label>
-                       <input type="number" class="form-control" id="age" name="age"  placeholder="Enter your age" onblur="Age()">
+                       <input type="number" class="form-control" id="age" name="age"  placeholder="Enter your age" onblur="Age()" value="${moduleDto.age}">
                        <span id="CheckAge" style="color: red;"></span>
                    </div>
 
@@ -202,18 +201,24 @@
 
                    <div class="col-md-6 mb-3">
                        <label for="phoneNumber" class="form-label">Phone Number<span id="span1">*</span></label>
-                       <input type="number" class="form-control" id="phoneNumber" name="phoneNumber"  placeholder="Enter your phone number" onblur="phoneNo()">
+                       <input type="number" class="form-control" id="phoneNumber" name="phoneNumber"  placeholder="Enter your phone number" onblur="phoneNo()" value="${moduleDto.phoneNumber}">
                        <span id="phoneNumber" style="color: red;"></span>
                    </div>
 
                    <div class="col-md-6 mb-3">
                        <label for="password" class="form-label">Password<span id="span1">*</span></label>
-                       <input type="password" class="form-control" id="password" name="password" value="${moduleDto.password}" placeholder="Enter your password">
+                       <input type="password" class="form-control" id="password" name="password"  placeholder="Enter your password" value="${moduleDto.password}">
                    </div>
 
                    <div class="col-md-6 mb-3">
                        <label for="confirmPassword" class="form-label">Confirm Password<span id="span1">*</span></label>
-                       <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="${moduleDto.confirmPassword}" placeholder="Confirm your password">
+                       <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"  placeholder="Confirm your password" value="${moduleDto.confirmPassword}">
+                   </div>
+
+                   <div class="col-md-6 mb-3">
+                        <label for="profileImage" class="form-label">Profile picture<span id="span1">*</span></label>
+                       <input type="file" class="form-control" id="profileImage" name="multipartFile" >
+                       <span id="phoneNumber" style="color: red;"></span>
                    </div>
 
                    <br>
@@ -269,46 +274,31 @@
 
             }
 
-            function Age()
-            {
-                var age = document.getElementById("age").value;
-                console.log(age);
 
-                var xhttp = new XMLHttpRequest();
-                if(age !==""){
-                    xhttp.onload = function ()
-                     {
-                        document.getElementById("CheckAge").innerHTML = this.responseText;
-                        console.log(this.responseText);
-                    }
 
-                    xhttp.open("GET", "http://localhost:8081/xworkz_commonModule_omkarD/checkAge?age=" +age);
-                    xhttp.send();
+            function phoneNo() {
+                var phoneNumber = document.getElementById("phoneNumber").value.trim();
+                console.log("Phone Number:", phoneNumber);
 
-                }
+                if (phoneNumber !== "" && /^\d{10}$/.test(phoneNumber)) { r
+                    var xhttp = new XMLHttpRequest();
 
-            }
-
-            function phoneNo()
-            {
-                var phoneNumber = document.getElementById("phoneNumber").value;
-                console.log(phoneNumber);
-                var xhttp = new XMLHttpRequest();
-
-                if(phoneNumber !==""){
-                    xhttp.onload = function ()
-                     {
+                    xhttp.onload = function () {
                         document.getElementById("checkPhoneNo").innerHTML = this.responseText;
-                        console.log(this.responseText);
-                    }
+                        console.log("Response:", this.responseText);
+                    };
 
-                    xhttp.open("GET", "http://localhost:8081/xworkz_commonModule_omkarD/checkPhoneNumber?phoneNumber=" +phoneNumber);
+                    xhttp.onerror = function () {
+                        console.error("Error: Failed to fetch phone number details.");
+                        document.getElementById("checkPhoneNo").innerHTML = "Error checking phone number.";
+                    };
+
+                    xhttp.open("GET", "http://localhost:8081/xworkz_commonModule_omkarD/checkPhoneNumber?phoneNumber=" + encodeURIComponent(phoneNumber), true);
                     xhttp.send();
-
+                } else {
+                    alert("Please enter a valid 10-digit phone number.");
                 }
-
             }
-
        </script>
 
 

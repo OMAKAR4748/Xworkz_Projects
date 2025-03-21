@@ -65,6 +65,9 @@
         .navbar-nav {
             text-align: center;
         }
+        #span1{
+                color:red;
+                }
     </style>
 </head>
 <body>
@@ -94,17 +97,17 @@
         <h2>Forgot Password</h2>
         <form action="updatePassword" method="post">
             <div class="mb-3">
-                <label for="email" class="form-label">Email:</label>
+                <label for="email" class="form-label">Email<span id="span1">*</span></label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
             </div>
 
             <div class="mb-3">
-                <label for="new-password" class="form-label">New Password:</label>
+                <label for="new-password" class="form-label">New Password<span id="span1">*</span></label>
                 <input type="password" class="form-control" id="new-password" name="password" placeholder="Enter new password" required>
             </div>
 
             <div class="mb-3">
-                <label for="confirm-password" class="form-label">Confirm Password:</label>
+                <label for="confirm-password" class="form-label">Confirm Password<span id="span1">*</span></label>
                 <input type="password" class="form-control" id="confirm-password" name="confirmPassword" placeholder="Confirm new password" required>
             </div>
 

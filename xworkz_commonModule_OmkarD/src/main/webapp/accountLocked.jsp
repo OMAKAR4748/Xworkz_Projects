@@ -70,10 +70,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="signUp.jsp">SignUp</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="signin.jsp">SignIn</a>
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -88,5 +88,6 @@
         <p>You can try again after: <span class="unlock-time"><c:out value="${unlockTime}" /></span> (in 24 hours)</p>
         <a class="back-link" href="forgotPassword.jsp">Forgot Password</a>
     </div>
+
 </body>
 </html>

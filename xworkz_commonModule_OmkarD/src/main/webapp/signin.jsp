@@ -18,7 +18,7 @@
             color: black;
         }
         .container {
-            margin-top: 5rem;
+            margin-top: 1rem;
             max-width: 500px;
         }
         #logo{
@@ -103,6 +103,10 @@
                     transition: all 0.3s ease;
                 }
 
+                #span1{
+                        color:red;
+                        }
+
     </style>
 </head>
 <body>
@@ -117,7 +121,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="index.jsp">Home</a>
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -126,37 +129,31 @@
     <h6 style=text-align:center><span style="color: black;">${msg}</span><br>
                 <span style="color: red;">${unlockTime}<span></h6>
 
-
-
     <div class="container">
-    <div class="container mt-5">
-          <h1>Sign In </h1>
-           <div class="card">
-                <form action="userSignIn" method="get">
+        <div class="container mt-5">
+              <h1>Sign In </h1>
+               <div class="card">
+                    <form action="userSignIn" method="get">
 
-                    <div class="mb-3">
-                       <label for="email" class="form-label">Email:</label>
-                       <input type="email" class="form-control" id="email" name="email" value="${moduleDto.email}" placeholder="Enter your email" >
-                    </div>
+                        <div class="mb-3">
+                           <label for="email" class="form-label">Email<span id="span1">*</span></label>
+                           <input type="email" class="form-control" id="email" name="email" value="${moduleDto.email}" placeholder="Enter your email" >
+                        </div>
 
-                    <div class="mb-3">
-                       <label for="password" class="form-label">Password:</label>
-                       <input type="password" class="form-control" id="password" name="password" value="${moduleDto.password}" placeholder="Enter your password" >
-                    </div>
-                       <span style="color: red;">${inValidData}</span>
+                        <div class="mb-3">
+                           <label for="password" class="form-label">Password<span id="span1">*</span></label>
+                           <input type="password" class="form-control" id="password" name="password" value="${moduleDto.password}" placeholder="Enter your password" >
+                        </div>
+                           <span style="color: red;">${inValidData}</span>
 
-                    <button type="submit" class="btn btn-custom"><a  href="fetchUsers?email=${user.email}"></a>SignIn</button>
-                    <p class="text-center mt-3">
-                       <a href="forgotPassword.jsp">Forgot Password?</a>
-                    </p>
-
-                </form>
-           </div>
+                        <button type="submit" class="btn btn-custom"><a  href="fetchUsers?email=${user.email}"></a>SignIn</button>
+                        <p class="text-center mt-3">
+                           <a href="forgotPassword.jsp">Forgot Password?</a>
+                        </p>
+                    </form>
+               </div>
+        </div>
     </div>
-
-
-
-
 
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

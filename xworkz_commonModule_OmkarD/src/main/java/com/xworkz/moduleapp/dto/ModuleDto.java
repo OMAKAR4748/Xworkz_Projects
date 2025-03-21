@@ -1,39 +1,36 @@
 package com.xworkz.moduleapp.dto;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-
 public class ModuleDto {
 
     private Integer id;
 
+    @Size(min = 3, max = 25, message = "User Name Should be between 3 and 25 characters")
     private String fullName;
-    @Size(min = 3, max = 25, message = "User Name Should be 3 and 25")
 
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Email must contain '@' and '.'")
     private String email;
-    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "email must be @ and . is mandatory")
 
+    @Min(value = 18, message = "Age must be at least 18")
     private Integer age;
-    @Size(min= 18 , message = "Age must be min 18")
 
     private String gender;
-
     private String location;
 
+    @Pattern(regexp = "^[789]\\d{9}$", message = "Phone Number must be 10 digits starting with 7, 8, or 9")
     private String phoneNumber;
-    @Pattern(regexp = "^[789]\\d{9}$", message = "Phone Number must be 10 digit")
 
     private String password;
-
     private String confirmPassword;
-
-
+    private String profileImage;
+    private MultipartFile multipartFile;
 }

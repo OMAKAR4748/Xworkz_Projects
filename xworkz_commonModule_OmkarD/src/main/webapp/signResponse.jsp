@@ -72,7 +72,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="signin.jsp">SignIn</a>
                     </li>
-
                 </ul>
             </div>
         </div>

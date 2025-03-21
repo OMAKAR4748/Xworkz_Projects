@@ -68,9 +68,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="signUp.jsp">SignUp</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="signin.jsp">SignIn</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="fetchUsers?email=${validData}">View Profile</a>
                     </li>

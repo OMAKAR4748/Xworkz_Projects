@@ -1,7 +1,6 @@
 package com.xworkz.moduleapp.service;
 
 import com.xworkz.moduleapp.dto.ModuleDto;
-import com.xworkz.moduleapp.entity.ModuleEntity;
 
 
 import java.time.LocalDateTime;
@@ -30,11 +29,11 @@ public interface ModuleService {
 
     Long isEmailId(String email);
 
-    ModuleEntity isUserName(String fullName);
+    Long  isUserName(String fullName);
 
-    ModuleEntity checkAge(Integer age);
+    Long checkPhoneNumber(String phoneNumber);
 
-    ModuleEntity checkPhoneNo(String phoneNumber);
+
 
 
 }

@@ -108,6 +108,7 @@
     </div>
 
     <h1 style="text-align:center;">Welcome to Xworkz</h1>
+
     <p style="text-align:center;">Your journey to mastering Java and web development starts here!</p>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

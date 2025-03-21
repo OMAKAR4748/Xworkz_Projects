@@ -65,7 +65,7 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-custom">
+    <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
            <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="logo" id="logo">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,8 +73,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.jsp">Home</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.jsp">Home</a>
                      </li>
 
                     <li class="nav-item">
@@ -84,7 +84,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="signin.jsp">SignIn</a>
                     </li>
-
                 </ul>
             </div>
         </div>
